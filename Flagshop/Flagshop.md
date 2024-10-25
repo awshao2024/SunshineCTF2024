@@ -29,6 +29,7 @@ Therefore, inputting a "pronouns" string that is long enough will overwrite the 
 A string of length=34 does the trick.
 
 ![part2](flagshop_part2.png)
+
 ![part3](flagshop_part3.png)
 
 However, accessing the admin panel does not print the flag - but it does load it into memory.
