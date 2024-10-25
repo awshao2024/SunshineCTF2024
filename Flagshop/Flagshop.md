@@ -3,13 +3,13 @@ This challenge features a terminal where a user creates an account by entering a
 
 ### Decompilation and Analysis
 The main function shows that the program creates a user account, and then takes in user input to execute 1 of 2 commands. The command "1" shows the admin panel.
-![[flagshop_main.png]]
+![main](flagshop_main.png)
 
 `load_panel` handles the admin panel. The program checks if a test value != 0 to see if the user has admin permissions; if so, the program reads the flag file. Note that the test value is at a memory offset from the user input buffer (`param_1` is actually `local_28` which holds account info). Also, note that after reading the flag, `load_panel` prints the username as inputted in `create_account`.
-![[flagshop_panel.png]]
+![panel](flagshop_panel.png)
 
 As expected, `read_flag` puts the flag into memory.
-![[flagshop_flag.png]]
+![readflag](flagshop_flag.png)
 
 ### Buffer Overflow
 Getting admin permissions is simple - all that is needed to do is overwrite the test value located after the input buffer.
@@ -20,11 +20,11 @@ input_buf+0x18: admin test value
 ```
 
 Therefore, inputting a "pronouns" string that is long enough will overwrite the admin test value and allow access to the admin panel.
-![[flagshop_part1.png]]
+![part1](flagshop_part1.png)
 
 A string of length=34 does the trick.
-![[flagshop_part2.png]]
-![[flagshop_part3.png]]
+![part2](flagshop_part2.png)
+![part3](flagshop_part3.png)
 
 However, accessing the admin panel does not print the flag - but it does load it into memory.
 
@@ -57,7 +57,7 @@ p.interactive()
 Note that the actual buffer overflow + FSV payload is written to the "pronouns" field, but this works because overflowing "pronouns" overwrites "username".
 
 Launching the exploit:
-![[flagshop_win.png]]
+![win](flagshop_win.png)
 
 ### Flag
 sun{c@n_st1ll_r3@d_off_the_he@p_fr0m_st@ck_po!nters!}
