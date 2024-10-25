@@ -94,19 +94,23 @@ CLAW
 
 ### Decompilation and Analysis
 There is no symbol for `main`, but an entry point can be found using Ghidra, which leads to this function which handles command input:
+
 ![commands](drone_commands.png)
 
 Only a segment of this function is shown, but the function generally compares user input to a command code (MOVE, STOP, SCAN, etc) and executes code corresponding to that command, which usually involves printing out some flavor text.
 
 Most of the commands are unimportant, but the code for CAMO includes a call to a `deprecated_feedback` function, which is of interest:
+
 ![camo](drone_camo.png)
 
 `deprecated_feedback`:
+
 ![deprecated](drone_deprecated.png)
 
 This function has a `read` call to a buffer - a good target for buffer overflow. However, the "drone"/program must be in unSAFE mode.
 
 Therefore, the correct command sequence is SAFE to turn off safe mode, and then CAMO to access the unsafe feedback input.
+
 ![setup](drone_setup.png)
 
 ### Buffer Overflow + Ret2Libc
@@ -182,6 +186,7 @@ p.interactive()
 ```
 
 Launching the exploit:
+
 ![win](drone_win.png)
 
 ### Flag
